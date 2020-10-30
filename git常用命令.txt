@@ -1,0 +1,64 @@
+git init  # 新建git 仓库
+git add file # 添加文件至暂存区
+git commit -m 'Description '  # 提交文件到仓库
+git checkout file 	              # 从仓库下拉文件至工作区（本地），撤销修改，用仓库文件覆盖本地文件
+
+git log # 查看操作日志，显示从最近到最远的提交日志
+git log --pretty=oneline # 每行显示操作日志，显示从最近到最远的提交日志
+
+git reset hard HEAD^ # 回退到上个版本，HEAD^^回退到上上个版本，HEAD~n 回退到n个版本
+git reset hard 修改版本号（部分即可）  # 回退到指定版本
+git reflog  #用来记录你的每一次命令，方便查看操作记录的版本号
+
+git clone git@github.com:username/programename.git  # 从远程库复制项目到本地
+git remote add origin git@github.com:username/programename.git # 远程库与本地库做关联，origin 是Git默认远程库的叫法，可以改成别的一般不改
+git push -u origin master 
+# 把本地库的内容推送到远程，用git push命令，实际上是把当前分支master推送到远程。
+# 把本地库的内容推送到远程，用git push命令，实际上是把当前分支master推送到远程。
+# 由于远程库是空的，我们第一次推送master分支时，加上了-u参数，
+# Git不但会把本地的master分支内容推送的远程新的master分支，
+# 还会把本地的master分支和远程的master分支关联起来，在以后的推送或者拉取时就可以简化命令
+git push origin master # 第二次至以后可以用此命令推送到远程库
+
+---------------------------git 分支-------------------------------------------------------------------------
+查看分支：git branch
+
+创建分支：git branch <name>
+
+切换分支：git checkout <name>或者git switch <name>
+
+创建+切换分支：git checkout -b <name>或者git switch -c <name>
+
+合并某分支到当前分支：git merge <name>
+
+删除分支：git branch -d <name>
+
+-------------------------修复BUG------------------------------------------------------------------------
+修复bug时，我们会通过创建新的bug分支进行修复，然后合并，最后删除；
+
+当手头工作没有完成时，先把工作现场git stash一下，然后去修复bug，修复后，再git stash pop，回到工作现场；
+
+在master分支上修复的bug，想要合并到当前dev分支，可以用git cherry-pick <commit>命令，把bug提交的修改“复制”到当前分支，避免重复劳动。
+
+------------------------新功能分支------------------------------------------------------------------------
+开发一个新功能最好新建一个分支；
+
+如果要丢弃一个没有被合并过的分支，可以通过git branch -D <name>强行删除。
+
+-----------------------本地分支和远程分支----------------------------------------------------------------
+查看远程库信息，使用git remote -v；
+
+本地新建的分支如果不推送到远程，对其他人就是不可见的；
+
+从本地推送分支，使用git push origin branch-name，如果推送失败，先用git pull抓取远程的新提交；
+
+在本地创建和远程分支对应的分支，使用git checkout -b branch-name origin/branch-name，本地和远程分支的名称最好一致；
+
+建立本地分支和远程分支的关联，使用git branch --set-upstream branch-name origin/branch-name；
+
+从远程抓取分支，使用git pull，如果有冲突，要先处理冲突。
+--------------------- rebase -----------------------------------------------------------------------------
+rebase操作可以把本地未push的分叉提交历史整理成直线；
+
+rebase的目的是使得我们在查看历史提交的变化时更容易，因为分叉的提交需要三方对比。
+
